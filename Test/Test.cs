@@ -27,10 +27,10 @@ namespace Test
 
             applyDecisionRequest.ApiKey = "key";
 
-            Assert.Equal("https://api.sift.com/v3/accounts/123/users/gary/orders/1/decisions",
+            ClassicAssert.Equal("https://api.sift.com/v3/accounts/123/users/gary/orders/1/decisions",
                          applyDecisionRequest.Request.RequestUri.ToString());
 
-            Assert.Equal(Convert.ToBase64String(Encoding.Default.GetBytes("key")),
+            ClassicAssert.Equal(Convert.ToBase64String(Encoding.Default.GetBytes("key")),
                          applyDecisionRequest.Request.Headers.Authorization.Parameter);
 
         }
@@ -161,7 +161,7 @@ namespace Test
 
             // Augment with custom fields
             createOrder.AddField("foo", "bar");
-            Assert.Equal("{\"$type\":\"$create_order\",\"$user_id\":\"test_dotnet_booking_with_all_fields\"," +
+            ClassicAssert.Equal("{\"$type\":\"$create_order\",\"$user_id\":\"test_dotnet_booking_with_all_fields\"," +
                          "\"$session_id\":\"sessionId\",\"$order_id\":\"oid\",\"$user_email\":\"bill@gmail.com\"," +
                          "\"$amount\":1000000000000,\"$currency_code\":\"USD\",\"$billing_address\":{\"$name\":\"gary\",\"$city\":\"san francisco\"}," +
                          "\"$bookings\":[{\"$booking_type\":\"$flight\",\"$title\":\"SFO - LAS, 2 Adults\",\"$start_time\":2038412903," +
@@ -188,7 +188,7 @@ namespace Test
                 Event = createOrder
             };
 
-            Assert.Equal("https://api.sift.com/v205/events", eventRequest.Request.RequestUri.ToString());
+            ClassicAssert.Equal("https://api.sift.com/v205/events", eventRequest.Request.RequestUri.ToString());
 
             eventRequest = new EventRequest
             {
@@ -198,7 +198,7 @@ namespace Test
                 ReturnRouteInfo = true
             };
 
-            Assert.Equal("https://api.sift.com/v205/events?abuse_types=legacy,payment_abuse&return_score=true&return_route_info=true",
+            ClassicAssert.Equal("https://api.sift.com/v205/events?abuse_types=legacy,payment_abuse&return_score=true&return_route_info=true",
                          Uri.UnescapeDataString(eventRequest.Request.RequestUri.ToString()));
         }
 
@@ -219,7 +219,7 @@ namespace Test
                 ["payment_status"] = "$success"
             });
 
-            Assert.Equal("{\"$type\":\"make_call\",\"$user_id\":\"gary\",\"foo\":" +
+            ClassicAssert.Equal("{\"$type\":\"make_call\",\"$user_id\":\"gary\",\"foo\":" +
                               "\"bar\",\"payment_status\":\"$success\"}",
                               makeCall.ToJson());
         }
@@ -247,7 +247,7 @@ namespace Test
 
             // Augment with custom fields
             createOrder.AddField("foo", "bar");
-            Assert.Equal("{\"$type\":\"$create_order\",\"$user_id\":\"test_dotnet_browser_field\",\"$session_id\":\"sessionId\"," +
+            ClassicAssert.Equal("{\"$type\":\"$create_order\",\"$user_id\":\"test_dotnet_browser_field\",\"$session_id\":\"sessionId\"," +
                          "\"$order_id\":\"oid\",\"$user_email\":\"bill@gmail.com\",\"$amount\":1000000000000,\"$currency_code\":\"USD\"," +
                          "\"$browser\":{\"$user_agent\":\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36\"," +
                          "\"$accept_language\":\"en-US\",\"$content_language\":\"en-GB\"},\"foo\":\"bar\"}",
@@ -259,7 +259,7 @@ namespace Test
                 Event = createOrder
             };
 
-            Assert.Equal("https://api.sift.com/v205/events", eventRequest.Request.RequestUri.ToString());
+            ClassicAssert.Equal("https://api.sift.com/v205/events", eventRequest.Request.RequestUri.ToString());
 
             eventRequest = new EventRequest
             {
@@ -268,7 +268,7 @@ namespace Test
                 ReturnScore = true
             };
 
-            Assert.Equal("https://api.sift.com/v205/events?abuse_types=legacy,payment_abuse&return_score=true",
+            ClassicAssert.Equal("https://api.sift.com/v205/events?abuse_types=legacy,payment_abuse&return_score=true",
                          Uri.UnescapeDataString(eventRequest.Request.RequestUri.ToString()));
         }
 
@@ -290,7 +290,7 @@ namespace Test
 
             // Augment with custom fields
             transaction.AddField("foo", "bar");
-            Assert.Equal("{\"$type\":\"$transaction\",\"$user_id\":\"test_dotnet_transaction_event\",\"$session_id\":\"sessionId\"," +
+            ClassicAssert.Equal("{\"$type\":\"$transaction\",\"$user_id\":\"test_dotnet_transaction_event\",\"$session_id\":\"sessionId\"," +
                                  "\"$transaction_type\":\"$sale\",\"$transaction_status\":\"$failure\",\"$amount\":1000000000000,\"$currency_code\":\"USD\"," +
                                  "\"$decline_category\":\"$invalid\",\"foo\":\"bar\"}", transaction.ToJson());
 
@@ -299,7 +299,7 @@ namespace Test
                 Event = transaction
             };
 
-            Assert.Equal("https://api.sift.com/v205/events", eventRequest.Request.RequestUri.ToString());
+            ClassicAssert.Equal("https://api.sift.com/v205/events", eventRequest.Request.RequestUri.ToString());
 
             eventRequest = new EventRequest
             {
@@ -308,7 +308,7 @@ namespace Test
                 ReturnScore = true
             };
 
-            Assert.Equal("https://api.sift.com/v205/events?abuse_types=legacy,payment_abuse&return_score=true",
+            ClassicAssert.Equal("https://api.sift.com/v205/events?abuse_types=legacy,payment_abuse&return_score=true",
                           Uri.UnescapeDataString(eventRequest.Request.RequestUri.ToString()));
         }
 
@@ -336,7 +336,7 @@ namespace Test
 
             // Augment with custom fields
             createOrder.AddField("foo", "bar");
-            Assert.Equal("{\"$type\":\"$create_order\",\"$user_id\":\"test_dotnet_sepa_payment_method_fields\",\"$session_id\":\"sessionId\"," +
+            ClassicAssert.Equal("{\"$type\":\"$create_order\",\"$user_id\":\"test_dotnet_sepa_payment_method_fields\",\"$session_id\":\"sessionId\"," +
                                  "\"$order_id\":\"12345\",\"$payment_methods\":[{\"$payment_type\":\"$sepa_instant_credit\",\"$shortened_iban_first6\":\"FR7630\"," +
                                  "\"$shortened_iban_last4\":\"1234\",\"$sepa_direct_debit_mandate\":true}],\"foo\":\"bar\"}",
                                  createOrder.ToJson());
@@ -346,7 +346,7 @@ namespace Test
                 Event = createOrder
             };
 
-            Assert.Equal("https://api.sift.com/v205/events", eventRequest.Request.RequestUri.ToString());
+            ClassicAssert.Equal("https://api.sift.com/v205/events", eventRequest.Request.RequestUri.ToString());
 
             eventRequest = new EventRequest
             {
@@ -355,7 +355,7 @@ namespace Test
                 ReturnScore = true
             };
 
-            Assert.Equal("https://api.sift.com/v205/events?abuse_types=legacy,payment_abuse&return_score=true",
+            ClassicAssert.Equal("https://api.sift.com/v205/events?abuse_types=legacy,payment_abuse&return_score=true",
                           Uri.UnescapeDataString(eventRequest.Request.RequestUri.ToString()));
         }
 
@@ -400,7 +400,7 @@ namespace Test
 
             // Augment with custom fields
             createOrder.AddField("foo", "bar");
-            Assert.Equal("{\"$type\":\"$create_order\",\"$user_id\":\"test_dotnet_merchant_profile_field\",\"$session_id\":\"sessionId\"," +
+            ClassicAssert.Equal("{\"$type\":\"$create_order\",\"$user_id\":\"test_dotnet_merchant_profile_field\",\"$session_id\":\"sessionId\"," +
                                  "\"$order_id\":\"12345\",\"$payment_methods\":[{\"$payment_type\":\"$sepa_instant_credit\",\"$shortened_iban_first6\":\"FR7630\"," +
                                  "\"$shortened_iban_last4\":\"1234\",\"$sepa_direct_debit_mandate\":true}],\"$merchant_profile\":{\"$merchant_id\":\"123\"," +
                                  "\"$merchant_category_code\":\"9876\",\"$merchant_name\":\"ABC Merchant\",\"$merchant_address\":{\"$name\":\"Bill Jones\"," +
@@ -413,7 +413,7 @@ namespace Test
                 Event = createOrder
             };
 
-            Assert.Equal("https://api.sift.com/v205/events", eventRequest.Request.RequestUri.ToString());
+            ClassicAssert.Equal("https://api.sift.com/v205/events", eventRequest.Request.RequestUri.ToString());
 
             eventRequest = new EventRequest
             {
@@ -422,7 +422,7 @@ namespace Test
                 ReturnScore = true
             };
 
-            Assert.Equal("https://api.sift.com/v205/events?abuse_types=legacy,payment_abuse&return_score=true",
+            ClassicAssert.Equal("https://api.sift.com/v205/events?abuse_types=legacy,payment_abuse&return_score=true",
                           Uri.UnescapeDataString(eventRequest.Request.RequestUri.ToString()));
         }
 
@@ -490,7 +490,7 @@ namespace Test
                 triggered_3ds = "$processor",
                 merchant_initiated_transaction = true
             };
-            Assert.Equal("{\"$type\":\"$transaction\",\"$user_id\":\"test_dotnet_transaction_event\",\"$session_id\":\"sessionId\"," +
+            ClassicAssert.Equal("{\"$type\":\"$transaction\",\"$user_id\":\"test_dotnet_transaction_event\",\"$session_id\":\"sessionId\"," +
                                  "\"$transaction_type\":\"$sale\",\"$transaction_status\":\"$failure\",\"$amount\":1000000000000,\"$currency_code\":\"USD\"," +
                                  "\"$payment_method\":{\"$payment_type\":\"$sepa_instant_credit\",\"$shortened_iban_first6\":\"FR7630\"," +
                                  "\"$shortened_iban_last4\":\"1234\",\"$sepa_direct_debit_mandate\":true},\"$decline_category\":\"$invalid\"," +
@@ -509,7 +509,7 @@ namespace Test
                 Event = transaction
             };
 
-            Assert.Equal("https://api.sift.com/v205/events", eventRequest.Request.RequestUri.ToString());
+            ClassicAssert.Equal("https://api.sift.com/v205/events", eventRequest.Request.RequestUri.ToString());
 
             eventRequest = new EventRequest
             {
@@ -518,7 +518,7 @@ namespace Test
                 ReturnScore = true
             };
 
-            Assert.Equal("https://api.sift.com/v205/events?abuse_types=legacy,payment_abuse&return_score=true",
+            ClassicAssert.Equal("https://api.sift.com/v205/events?abuse_types=legacy,payment_abuse&return_score=true",
                           Uri.UnescapeDataString(eventRequest.Request.RequestUri.ToString()));
         }
 
@@ -548,7 +548,7 @@ namespace Test
 
             // Augment with custom fields
             createOrder.AddField("foo", "bar");
-            Assert.Equal("{\"$type\":\"$create_order\",\"$user_id\":\"test_dotnet_wire_payment_methods\",\"$session_id\":\"sessionId\"," +
+            ClassicAssert.Equal("{\"$type\":\"$create_order\",\"$user_id\":\"test_dotnet_wire_payment_methods\",\"$session_id\":\"sessionId\"," +
                                  "\"$order_id\":\"12345\",\"$payment_methods\":[{\"$payment_type\":\"$wire_credit\",\"$routing_number\":\"CHASUS33XX\"," +
                                  "\"$account_number_last5\":\"12345\",\"$account_holder_name\":\"John Doe\",\"$bank_name\":\"Chase\",\"$bank_country\":\"US\"}],\"foo\":\"bar\"}",
                                  createOrder.ToJson());
@@ -558,7 +558,7 @@ namespace Test
                 Event = createOrder
             };
 
-            Assert.Equal("https://api.sift.com/v205/events", eventRequest.Request.RequestUri.ToString());
+            ClassicAssert.Equal("https://api.sift.com/v205/events", eventRequest.Request.RequestUri.ToString());
 
             eventRequest = new EventRequest
             {
@@ -567,7 +567,7 @@ namespace Test
                 ReturnScore = true
             };
 
-            Assert.Equal("https://api.sift.com/v205/events?abuse_types=legacy,payment_abuse&return_score=true",
+            ClassicAssert.Equal("https://api.sift.com/v205/events?abuse_types=legacy,payment_abuse&return_score=true",
                           Uri.UnescapeDataString(eventRequest.Request.RequestUri.ToString()));
         }
 
@@ -587,10 +587,10 @@ namespace Test
 
             verificationCheckRequest.ApiKey = apiKey;
 
-            Assert.Equal(Convert.ToBase64String(Encoding.Default.GetBytes(apiKey)),
+            ClassicAssert.Equal(Convert.ToBase64String(Encoding.Default.GetBytes(apiKey)),
                 verificationCheckRequest.Request.Headers.Authorization.Parameter);
 
-            Assert.Equal("https://api.sift.com/v1.1/verification/check",
+            ClassicAssert.Equal("https://api.sift.com/v1.1/verification/check",
                          verificationCheckRequest.Request.RequestUri.ToString());
         }
 
@@ -624,10 +624,10 @@ namespace Test
 
             verificationSendRequest.ApiKey = apiKey;
 
-            Assert.Equal(Convert.ToBase64String(Encoding.Default.GetBytes(apiKey)),
+            ClassicAssert.Equal(Convert.ToBase64String(Encoding.Default.GetBytes(apiKey)),
                 verificationSendRequest.Request.Headers.Authorization.Parameter);
 
-            Assert.Equal("https://api.sift.com/v1.1/verification/send",
+            ClassicAssert.Equal("https://api.sift.com/v1.1/verification/send",
                          verificationSendRequest.Request.RequestUri.ToString());
         }
 
@@ -645,11 +645,11 @@ namespace Test
             };
             verificationResendRequest.ApiKey = apiKey;
 
-            Assert.Equal(Convert.ToBase64String(Encoding.Default.GetBytes(apiKey)),
+            ClassicAssert.Equal(Convert.ToBase64String(Encoding.Default.GetBytes(apiKey)),
                 verificationResendRequest.Request.Headers.Authorization.Parameter);
 
 
-            Assert.Equal("https://api.sift.com/v1.1/verification/resend",
+            ClassicAssert.Equal("https://api.sift.com/v1.1/verification/resend",
                          verificationResendRequest.Request.RequestUri.ToString());
         }
 
@@ -676,7 +676,7 @@ namespace Test
             string signatureCore = myhmacsha1.ComputeHash(stream).Aggregate("", (s, e) => s + String.Format("{0:x2}", e), s => s);
             String signature = "sha1=" + signatureCore;
             WebhookValidator webhook = new WebhookValidator();
-            Assert.True(webhook.IsValidWebhook(requestBody, secretKey, signature));
+            ClassicAssert.True(webhook.IsValidWebhook(requestBody, secretKey, signature));
 
         }
 
@@ -697,7 +697,7 @@ namespace Test
                 "}";
 
             WebhookValidator webhook = new WebhookValidator();
-            Assert.False(webhook.IsValidWebhook(requestBody, secretKey, "InValid Key"));
+            ClassicAssert.False(webhook.IsValidWebhook(requestBody, secretKey, "InValid Key"));
 
 
         }
@@ -715,7 +715,7 @@ namespace Test
             };
             getMerchantRequest.ApiKey = apiKey;
 
-            Assert.Equal("https://api.sift.com/v3/accounts/"+accountId+"/psp_management/merchants",
+            ClassicAssert.Equal("https://api.sift.com/v3/accounts/"+accountId+"/psp_management/merchants",
                          getMerchantRequest.Request.RequestUri.ToString());
 
         }
@@ -758,11 +758,11 @@ namespace Test
 
             createMerchantRequest.ApiKey = apiKey;
 
-            Assert.Equal(Convert.ToBase64String(Encoding.Default.GetBytes(apiKey)),
+            ClassicAssert.Equal(Convert.ToBase64String(Encoding.Default.GetBytes(apiKey)),
                 createMerchantRequest.Request.Headers.Authorization.Parameter);
 
 
-            Assert.Equal("https://api.sift.com/v3/accounts/"+accountId+"/psp_management/merchants",
+            ClassicAssert.Equal("https://api.sift.com/v3/accounts/"+accountId+"/psp_management/merchants",
                          createMerchantRequest.Request.RequestUri.ToString());
         }
 
@@ -804,14 +804,14 @@ namespace Test
             };
             updateMerchantRequest.ApiKey = apiKey;
 
-            Assert.Equal(Convert.ToBase64String(Encoding.Default.GetBytes(apiKey)),
+            ClassicAssert.Equal(Convert.ToBase64String(Encoding.Default.GetBytes(apiKey)),
                 updateMerchantRequest.Request.Headers.Authorization.Parameter);
 
-            Assert.Equal("https://api.sift.com/v3/accounts/"+accountId+"/psp_management/merchants/test2",
+            ClassicAssert.Equal("https://api.sift.com/v3/accounts/"+accountId+"/psp_management/merchants/test2",
                          updateMerchantRequest.Request.RequestUri.ToString());
 
 
-            Assert.Equal("{\"id\":\"test-vineeth-5\"," +
+            ClassicAssert.Equal("{\"id\":\"test-vineeth-5\"," +
                 "\"name\":\"Wonderful Payments Inc\"," +
                 "\"description\":\"Wonderful Payments payment provider\"," +
                 "\"address\":{\"name\":\"Alany\"," +
@@ -844,10 +844,10 @@ namespace Test
             };
             getMerchantDetailRequest.ApiKey = apiKey;
 
-            Assert.Equal(Convert.ToBase64String(Encoding.Default.GetBytes(apiKey)),
+            ClassicAssert.Equal(Convert.ToBase64String(Encoding.Default.GetBytes(apiKey)),
                 getMerchantDetailRequest.Request.Headers.Authorization.Parameter);
 
-            Assert.Equal("https://api.sift.com/v3/accounts/"+accountId+"/psp_management/merchants/test-merchat-id",
+            ClassicAssert.Equal("https://api.sift.com/v3/accounts/"+accountId+"/psp_management/merchants/test-merchat-id",
              getMerchantDetailRequest.Request.RequestUri.ToString());
         }
 
@@ -886,7 +886,7 @@ namespace Test
 
             // Augment with custom fields
             chargeback.AddField("foo", "bar");
-            Assert.Equal("{\"$type\":\"$chargeback\",\"$user_id\":\"test_dotnet_chargeback_event\",\"$session_id\":\"sessionId\"," +
+            ClassicAssert.Equal("{\"$type\":\"$chargeback\",\"$user_id\":\"test_dotnet_chargeback_event\",\"$session_id\":\"sessionId\"," +
                                  "\"$order_id\":\"ORDER-123124124\",\"$transaction_id\":\"719637215\",\"$chargeback_state\":\"$lost\",\"$chargeback_reason\":\"$duplicate\"," +
                                  "\"$merchant_profile\":{\"$merchant_id\":\"123\",\"$merchant_category_code\":\"9876\",\"$merchant_name\":\"ABC Merchant\",\"$merchant_address\":" +
                                  "{\"$name\":\"Bill Jones\",\"$address_1\":\"2100 Main Street\",\"$address_2\":\"Apt 3B\",\"$city\":\"New London\",\"$region\":\"New Hampshire\"," +
@@ -898,7 +898,7 @@ namespace Test
                 Event = chargeback
             };
 
-            Assert.Equal("https://api.sift.com/v205/events", eventRequest.Request.RequestUri.ToString());
+            ClassicAssert.Equal("https://api.sift.com/v205/events", eventRequest.Request.RequestUri.ToString());
 
             eventRequest = new EventRequest
             {
@@ -907,7 +907,7 @@ namespace Test
                 ReturnScore = true
             };
 
-            Assert.Equal("https://api.sift.com/v205/events?abuse_types=legacy,payment_abuse&return_score=true",
+            ClassicAssert.Equal("https://api.sift.com/v205/events?abuse_types=legacy,payment_abuse&return_score=true",
                           Uri.UnescapeDataString(eventRequest.Request.RequestUri.ToString()));
         }
 
@@ -947,7 +947,7 @@ namespace Test
             // Augment with custom fields
             createAccount.AddField("foo", "bar");
 
-            Assert.Equal("{\"$type\":\"$create_account\",\"$user_id\":\"test_dotnet_create_account_event\",\"$session_id\":\"sessionId\"," +
+            ClassicAssert.Equal("{\"$type\":\"$create_account\",\"$user_id\":\"test_dotnet_create_account_event\",\"$session_id\":\"sessionId\"," +
                                  "\"$user_email\":\"bill@gmail.com\",\"$name\":\"Bill Jones\",\"$referrer_user_id\":\"janejane101\",\"$social_sign_on_type\":" +
                                  "\"$twitter\",\"$merchant_profile\":{\"$merchant_id\":\"123\",\"$merchant_category_code\":\"9876\",\"$merchant_name\":\"ABC Merchant\"," +
                                  "\"$merchant_address\":{\"$name\":\"Bill Jones\",\"$address_1\":\"2100 Main Street\",\"$address_2\":\"Apt 3B\",\"$city\":\"New London\"," +
@@ -960,7 +960,7 @@ namespace Test
                 Event = createAccount
             };
 
-            Assert.Equal("https://api.sift.com/v205/events", eventRequest.Request.RequestUri.ToString());
+            ClassicAssert.Equal("https://api.sift.com/v205/events", eventRequest.Request.RequestUri.ToString());
 
             eventRequest = new EventRequest
             {
@@ -969,7 +969,7 @@ namespace Test
                 ReturnScore = true
             };
 
-            Assert.Equal("https://api.sift.com/v205/events?abuse_types=legacy,payment_abuse&return_score=true",
+            ClassicAssert.Equal("https://api.sift.com/v205/events?abuse_types=legacy,payment_abuse&return_score=true",
                           Uri.UnescapeDataString(eventRequest.Request.RequestUri.ToString()));
         }
 
@@ -1009,7 +1009,7 @@ namespace Test
             // Augment with custom fields
             updateAccount.AddField("foo", "bar");
 
-            Assert.Equal("{\"$type\":\"$update_account\",\"$user_id\":\"test_dotnet_update_account_event\",\"$session_id\":\"sessionId\"," +
+            ClassicAssert.Equal("{\"$type\":\"$update_account\",\"$user_id\":\"test_dotnet_update_account_event\",\"$session_id\":\"sessionId\"," +
                                  "\"$user_email\":\"bill@gmail.com\",\"$name\":\"Bill Jones\",\"$referrer_user_id\":\"janejane101\",\"$social_sign_on_type\":" +
                                  "\"$twitter\",\"$merchant_profile\":{\"$merchant_id\":\"123\",\"$merchant_category_code\":\"9876\",\"$merchant_name\":\"ABC Merchant\"," +
                                  "\"$merchant_address\":{\"$name\":\"Bill Jones\",\"$address_1\":\"2100 Main Street\",\"$address_2\":\"Apt 3B\",\"$city\":" +
@@ -1022,7 +1022,7 @@ namespace Test
                 Event = updateAccount
             };
 
-            Assert.Equal("https://api.sift.com/v205/events", eventRequest.Request.RequestUri.ToString());
+            ClassicAssert.Equal("https://api.sift.com/v205/events", eventRequest.Request.RequestUri.ToString());
 
             eventRequest = new EventRequest
             {
@@ -1031,7 +1031,7 @@ namespace Test
                 ReturnScore = true
             };
 
-            Assert.Equal("https://api.sift.com/v205/events?abuse_types=legacy,payment_abuse&return_score=true",
+            ClassicAssert.Equal("https://api.sift.com/v205/events?abuse_types=legacy,payment_abuse&return_score=true",
                           Uri.UnescapeDataString(eventRequest.Request.RequestUri.ToString()));
         }
 
@@ -1063,7 +1063,7 @@ namespace Test
                 account_types = new ObservableCollection<string>() { "merchant", "premium" }
             };
 
-            Assert.Equal("{\"$type\":\"$login\",\"$user_id\":\"test_dotnet_login_event\",\"$session_id\":\"sessionId\"," +
+            ClassicAssert.Equal("{\"$type\":\"$login\",\"$user_id\":\"test_dotnet_login_event\",\"$session_id\":\"sessionId\"," +
                                  "\"$user_email\":\"bill@gmail.com\",\"$login_status\":\"$success\",\"$failure_reason\":\"$account_unknown\"," +
                                  "\"$social_sign_on_type\":\"$facebook\",\"$username\":\"test_user_name\",\"$ip\":\"128.148.1.135\",\"$browser\":" +
                                  "{\"$user_agent\":\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_3) AppleWebKit/537.36 (KHTML, like Gecko) " +
@@ -1076,7 +1076,7 @@ namespace Test
                 Event = login
             };
 
-            Assert.Equal("https://api.sift.com/v205/events", eventRequest.Request.RequestUri.ToString());
+            ClassicAssert.Equal("https://api.sift.com/v205/events", eventRequest.Request.RequestUri.ToString());
 
             eventRequest = new EventRequest
             {
@@ -1085,7 +1085,7 @@ namespace Test
                 ReturnScore = true
             };
 
-            Assert.Equal("https://api.sift.com/v205/events?abuse_types=legacy,payment_abuse&return_score=true",
+            ClassicAssert.Equal("https://api.sift.com/v205/events?abuse_types=legacy,payment_abuse&return_score=true",
                           Uri.UnescapeDataString(eventRequest.Request.RequestUri.ToString()));
         }
     }
